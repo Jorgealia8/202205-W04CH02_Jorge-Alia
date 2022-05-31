@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-export function FormFirst() {
-  const [formData, setFormData] = useState({
+export function FormFirst({ state }: { state: number }) {
+  const [formFirstData, setFormFirstData] = useState({
     name: '',
     lastname: '',
     birthdate: '',
@@ -11,16 +11,16 @@ export function FormFirst() {
 
   function handleSubmit(ev: any) {
     ev.preventDefault();
-    console.log('Guardando', formData);
+    console.log('Guardando', formFirstData);
   }
 
   function handleChange(ev: any) {
     const value =
       ev.target.type === 'checkbox' ? ev.target.checked : ev.target.value;
-    setFormData({ ...formData, [ev.target.name]: value });
+    setFormFirstData({ ...formFirstData, [ev.target.name]: value });
   }
 
-  return (
+  const firstForm = (
     <>
       <form onSubmit={handleSubmit}>
         <div>
@@ -28,7 +28,7 @@ export function FormFirst() {
             type="text"
             name="name"
             placeholder="Name"
-            value={formData.name}
+            value={formFirstData.name}
             onChange={handleChange}
             required
           />
@@ -38,7 +38,7 @@ export function FormFirst() {
             type="text"
             name="lastname"
             placeholder="Last name"
-            value={formData.lastname}
+            value={formFirstData.lastname}
             onChange={handleChange}
             required
           />
@@ -60,12 +60,11 @@ export function FormFirst() {
             id="male"
             value="male"
             onChange={handleChange}
-            required
           />
           <label htmlFor="Male">Male</label>
           <input
             type="radio"
-            name="Gender"
+            name="gender"
             id="female"
             value="female"
             onChange={handleChange}
@@ -73,7 +72,7 @@ export function FormFirst() {
           <label htmlFor="Female">Female</label>
           <input
             type="radio"
-            name="Gender"
+            name="gender"
             id="Other"
             value="Other"
             onChange={handleChange}
@@ -94,7 +93,7 @@ export function FormFirst() {
               type="text"
               name="email"
               placeholder="Email"
-              value={formData.email}
+              value={formFirstData.email}
               onChange={handleChange}
               required
             />
@@ -115,4 +114,74 @@ export function FormFirst() {
       </form>
     </>
   );
+
+  const [formSecondData, setFormSecondData] = useState({
+    user: '',
+    password: '',
+    repeatPassword: '',
+    type: '',
+  });
+
+  function handleSubmitSecond(ev: any) {
+    ev.preventDefault();
+    console.log('Guardando', formSecondData);
+  }
+
+  function handleChangeSecond(ev: any) {
+    const value =
+      ev.target.type === 'checkbox' ? ev.target.checked : ev.target.value;
+    setFormSecondData({ ...formSecondData, [ev.target.name]: value });
+  }
+
+  const secondForm = (
+    <>
+      <form onSubmit={handleSubmitSecond}>
+        <div>
+          <input
+            type="text"
+            name="username"
+            placeholder="User name"
+            value={formSecondData.user}
+            onChange={handleChangeSecond}
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="password"
+            placeholder="password"
+            value={formSecondData.password}
+            onChange={handleChangeSecond}
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="repeatPassword"
+            placeholder="Repeat Password"
+            value={formSecondData.repeatPassword}
+            onChange={handleChangeSecond}
+            required
+          />
+        </div>
+        <select
+          name="type"
+          id=""
+          value={formSecondData.type}
+          onChange={handleChangeSecond}
+          required
+        ></select>
+      </form>
+    </>
+  );
+
+  if (state === 1) {
+    return firstForm;
+  }
+  if (state === 2) {
+    return secondForm;
+  }
+  return <></>;
 }
